@@ -4,6 +4,7 @@ Varint encoding library.
 ref:  https://developers.google.com/protocol-buffers/docs/encoding?hl=en
 """
 
+
 def uvarint_encode(value):
     buf = bytearray()
     bits = value & 0x7f
@@ -27,5 +28,3 @@ def uvarint_decode(buf):
         if not (b & 0x80):
             return result, size
         shift += 7
-
-

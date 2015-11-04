@@ -1,4 +1,4 @@
-from multiaddr import parse
+from libp2p.peer.multiaddr import parse
 
 
 class MultiAddress(object):

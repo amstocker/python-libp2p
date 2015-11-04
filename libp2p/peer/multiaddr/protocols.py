@@ -1,7 +1,6 @@
 from collections import namedtuple
 
-from multiaddr.exceptions import ProtocolException
-
+from libp2p.peer.multiaddr.exceptions import ProtocolException
 
 
 # Definitions of protocol names, codes, and address sizes--respectively.
@@ -26,7 +25,6 @@ __protocol_names = {
         }
 
 __protocol_codes = dict([(p[1], p) for p in __protocol_names.values()])
-
 
 
 Protocol = namedtuple('Protocol', ('name', 'code', 'size'))

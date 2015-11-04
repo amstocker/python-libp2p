@@ -1,10 +1,9 @@
 """
 MultiAddress string and byte parsing.
 """
-from multiaddr import protocols, conversion
-from multiaddr.exceptions import AddressException
-from multiaddr.exceptions import ProtocolException
-
+from libp2p.peer.multiaddr import protocols, conversion
+from libp2p.peer.multiaddr.exceptions import AddressException
+from libp2p.peer.multiaddr.exceptions import ProtocolException
 
 
 def raise_invalid(string):
@@ -13,7 +12,6 @@ def raise_invalid(string):
     except:
         msg = "Invalid address"
     raise AddressException(msg)
-
 
 
 def string_to_tuples(string):
