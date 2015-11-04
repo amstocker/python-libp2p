@@ -10,3 +10,7 @@ htmlcov*
 **/__pycache__/
 .cache
 docs/build/
+
+# generated protobuf classes
+*_pb2.py
+*_pb3.py
