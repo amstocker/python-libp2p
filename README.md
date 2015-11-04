@@ -1,3 +1,3 @@
-bp2p for Python
+libp2p for Python
 =================
 `TODO`
