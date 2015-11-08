@@ -27,9 +27,9 @@ class BaseSubsystem(object):
     @asyncio.coroutine
     def run(self):
         """
-        Start this subsystem.  The defaul behavior is to wait for messages in
-        the message queue and then act upon them and possible add more tasks to
-        the main event loop such as network requests, etc.
+        Start this subsystem.  The default behavior is to wait for messages in
+        the message queue and then act upon them and possibly add more tasks to
+        the main event loop (such as network requests, etc).
         """
         # run initialization coroutine
         yield from self.init()

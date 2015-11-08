@@ -3,6 +3,7 @@ Implementation of Reactor using asyncio.
 """
 import asyncio
 import functools
+import signal
 
 from libp2p.reactor.base_reactor import BaseReactor
 
@@ -25,11 +26,21 @@ class AsyncioReactor(BaseReactor):
         """
         Starts all subsystems and runs until `self.stop()` is called.
         """
+        # add signal handlers (TODO: figure out windows ctrl+c events?)
+        for signame in ('SIGINT', 'SIGTERM'):
+            self._loop.add_signal_handler(getattr(signal, signame),
+                                          functools.partial(self.on_signal,
+                                                            signame))
+
         self._running = True
         fs = asyncio.wait([asyncio.async(s.run())
                             for s in self._subsystems.values()])
         self._loop.run_until_complete(fs)
         self._running = False
+
+    def on_signal(self, signame):
+        if signame in ('SIGINT', 'SIGTERM'):
+            self.stop()
 
     def stop(self):
         return self._loop.stop()

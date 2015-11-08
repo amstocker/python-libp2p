@@ -4,6 +4,8 @@ sys.path.append('..')
 import asyncio
 import libp2p
 
+from pprint import pprint
+
 
 class TestSubsystem(libp2p.reactor.BaseSubsystem):
 
@@ -17,7 +19,9 @@ class TestSubsystem(libp2p.reactor.BaseSubsystem):
         yield print("some sweet async task")
 
     def some_task(self):
-        print("some sweet task")
+        print('='*10 + ' RUNNING TASKS ' + '='*10)
+        pprint(self.reactor._tasks)
+        print('='*35)
 
     def handle_message(self, msg):
         yield print(msg)
