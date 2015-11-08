@@ -14,7 +14,7 @@ def b58encode(num, alpha=ALPHABET):
     while (num >= 58):  
         mod = num % 58
         encode = alpha[mod] + encode
-        num = num / 58
+        num = num // 58
     if (num):
         encode = alpha[num] + encode
     return encode

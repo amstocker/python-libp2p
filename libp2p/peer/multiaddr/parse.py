@@ -57,11 +57,11 @@ def bytes_to_tuples(addr):
 
     i = 0
     while i < len(addr):
-        code = conversion.proto_from_bytes(addr[i])
-        proto = protocols.get_by_code(code)
-        string, size = conversion.to_string(proto, addr[i+1:])
+        proto_code, proto_size = conversion.proto_from_bytes(addr[i:])
+        proto = protocols.get_by_code(proto_code)
+        string, string_size = conversion.to_string(proto, addr[i+proto_size:])
         tuples.append((proto, string))
-        i += (size+1)
+        i += (string_size+proto_size)
 
     return tuples
 
@@ -91,16 +91,10 @@ def parse_addr(addr):
     """
     Returns the parsed string and binary formats of a given multiaddr.
     """
-    try:
-        # If the address given can be decoded into ASCII then it is likely the
-        # string representation of a multiaddr.  Otherwise, we assume it is in
-        # binary representation.  (We do this because we can't use isinstance
-        # to differentiate between a byte string and an ascii string in 2.x)
-        addr.decode('ascii')
-        valid = True
-    except:
-        valid = False
-    if valid:
+    if isinstance(addr, str):
         return addr, string_to_bytes(addr)
-    else:    
+    elif isinstance(addr, (bytes, bytearray)):    
         return bytes_to_string(addr), addr
+    else:
+        msg = "Address must be type<str>, type<bytes>, or type<bytearray>"
+        raise AddressException(msg) 

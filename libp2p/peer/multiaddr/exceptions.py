@@ -1,5 +1,7 @@
+from libp2p.exceptions import Libp2pException
 
-class MultiAddressException(Exception):
+
+class MultiAddressException(Libp2pException):
     pass
 
 

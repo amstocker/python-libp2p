@@ -2,16 +2,16 @@ import sys
 sys.path.append('..')
 
 import asyncio
-import libp2p
+from libp2p import reactor
 
 from pprint import pprint
 
 
-class TestSubsystem(libp2p.reactor.BaseSubsystem):
+class TestSubsystem(reactor.BaseSubsystem):
 
     def init(self):
-        self.reactor.schedule_task(3, self.some_async_task, loop=True)
-        self.reactor.schedule_task(2, self.some_task, loop=True)
+        self.reactor.schedule_task(2, self.some_async_task, loop=True)
+        self.reactor.schedule_task(3, self.some_task, loop=True)
         yield from self.add_message("Hello World")
 
     @asyncio.coroutine
@@ -28,6 +28,6 @@ class TestSubsystem(libp2p.reactor.BaseSubsystem):
 
 
 if __name__ == "__main__":
-    reactor = libp2p.reactor.AsyncioReactor()
-    reactor.add_subsystem("test", TestSubsystem())
-    reactor.run()
+    r = reactor.get_reactor()
+    r.add_subsystem("test", TestSubsystem())
+    r.run()

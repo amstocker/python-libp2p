@@ -11,18 +11,20 @@ def uvarint_encode(value):
     value >>= 7
     size = 1
     while value:
-        buf.append(chr(0x80|bits))
+        buf.append(0x80|bits)
         bits = value & 0x7f
         value >>= 7
         size += 1
-    buf.append(chr(bits))
+    buf.append(bits)
     return bytes(buf), size
 
 
 def uvarint_decode(buf):
+    if not isinstance(buf, (bytes, bytearray)):
+        buf = bytes(buf)
     size = result = shift = 0
     while True:
-        b = ord(buf[size])
+        b = buf[size]
         result |= ((b & 0x7f) << shift)
         size += 1
         if not (b & 0x80):

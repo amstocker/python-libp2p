@@ -6,8 +6,8 @@ import struct
 
 from libp2p.peer.multiaddr import protocols
 from libp2p.peer.multiaddr.exceptions import AddressException
-from libp2p.peer.multiaddr.utils.base58 import b58encode, b58decode
-from libp2p.peer.multiaddr.utils.varint import uvarint_encode, uvarint_decode
+from libp2p.utils.base58 import b58encode, b58decode
+from libp2p.utils.varint import uvarint_encode, uvarint_decode
 
 
  ########
@@ -106,7 +106,7 @@ def proto_from_bytes(code):
     """
     Converts a protocol code from a bytes oject to an int.
     """
-    return uvarint_decode(code)[0]
+    return uvarint_decode(code)
 
 
 
