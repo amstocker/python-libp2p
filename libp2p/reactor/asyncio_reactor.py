@@ -2,6 +2,7 @@
 Implementation of Reactor using asyncio.
 """
 import asyncio
+import functools
 
 from libp2p.reactor.base_reactor import BaseReactor
 
@@ -47,13 +48,18 @@ class AsyncioReactor(BaseReactor):
         """
         Starts a task with the given `delay` (in seconds).
         """
+        # check if coroutine function
+        if not asyncio.iscoroutinefunction(coro):
+            coro = asyncio.coroutine(coro)
+
+        # loop indefinitely?
         loop = kwargs.pop('loop', False)
 
         @asyncio.coroutine
-        def job(self):
+        def job():
             yield from asyncio.sleep(delay)
             yield from coro()
             if loop:
-                self.self._loop.create_task(job)
+                self._loop.create_task(job())
 
-        return self._loop.create_task(job)
+        return self._loop.create_task(job())

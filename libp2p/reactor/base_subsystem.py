@@ -3,11 +3,13 @@ Abstract base class for libp2p subsystems that plug into the reactor.
 """
 import asyncio
 
+import libp2p.reactor
+
 
 class BaseSubsystem(object):
 
-    def __init__(self, loop=None, *args, **kwargs):
-        self._loop = loop or asyncio.get_event_loop()
+    def __init__(self, reactor=None, *args, **kwargs):
+        self.reactor = libp2p.reactor.get_reactor()
         self._queue = asyncio.Queue()
         self._running = False
 
