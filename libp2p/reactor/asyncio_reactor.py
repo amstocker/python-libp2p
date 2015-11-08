@@ -44,21 +44,23 @@ class AsyncioReactor(BaseReactor):
         """
         return asyncio.Task.all_tasks()
 
-    def schedule_task(self, delay, coro, *args, **kwargs):
+    def schedule_task(self, delay, func_or_coro, *args, **kwargs):
         """
-        Starts a task with the given `delay` (in seconds).
+        Starts a task with the given `delay` (in seconds).  `func_or_coro` must
+        be a function or a coroutine.
         """
-        # check if coroutine function
-        if not asyncio.iscoroutinefunction(coro):
-            coro = asyncio.coroutine(coro)
-
         # loop indefinitely?
         loop = kwargs.pop('loop', False)
 
         @asyncio.coroutine
         def job():
             yield from asyncio.sleep(delay)
-            yield from coro()
+            # check to see if job is a coroutine...
+            if asyncio.iscoroutinefunction(func_or_coro):
+                yield from func_or_coro()
+            else:
+                yield func_or_coro()
+            # if we are looping, create a new task for this job
             if loop:
                 self._loop.create_task(job())
 
