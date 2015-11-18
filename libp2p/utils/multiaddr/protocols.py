@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-from libp2p.peer.multiaddr.exceptions import ProtocolException
+from libp2p.utils.multiaddr.exceptions import ProtocolException
 
 
 # Definitions of protocol names, codes, and address sizes--respectively.

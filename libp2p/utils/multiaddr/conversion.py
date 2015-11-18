@@ -4,8 +4,8 @@ Conversions between python types and bytes objects.
 from socket import AF_INET6, inet_aton, inet_ntoa, inet_ntop, inet_pton
 import struct
 
-from libp2p.peer.multiaddr import protocols
-from libp2p.peer.multiaddr.exceptions import AddressException
+from libp2p.utils.multiaddr import protocols
+from libp2p.utils.multiaddr.exceptions import AddressException
 from libp2p.utils.base58 import b58encode, b58decode
 from libp2p.utils.varint import uvarint_encode, uvarint_decode
 
